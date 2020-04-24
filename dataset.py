@@ -157,10 +157,35 @@ class Dataset(object):
                    c += 1
      
                 doc[k] = ''.join(docl)
-
-            docs = []
+            doc1 = []
             for t in range(len(doc)):
                 text = doc[t]
+                text = text.replace("\n"," ")
+                text = text.replace(".",".<stop>")
+                text = text.replace("?","?<stop>")
+                text = text.replace("!","!<stop>")
+                text = text.replace("<prd>",".")
+                sentences = text.split("<stop>")
+
+                s1 = []
+
+                for j in range(len(sentences)): 
+                    a = sentences[j].split()
+                    b = []
+                    for i in range(len(a)):
+                        if len(a[i])< 22:
+                            b.append(a[i])
+
+                    if len(b) == len(a):
+                        s1.append(sentences[j])
+
+                if len(s1) == len(sentences):  
+                    doc1.append(' '.join(s1))
+            print(len(doc1))    
+            
+            docs = []
+            for t in range(len(doc1)):
+                text = doc1[t]
                 text = text.replace("\n"," ")
                 text = text.replace(".",".<stop>")
                 text = text.replace("?","?<stop>")
